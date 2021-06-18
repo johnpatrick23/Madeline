@@ -1,0 +1,8 @@
+[Unit]
+Description="Check if guac is running"
+
+[Service]
+User=root
+WorkingDirectory=/etc/Madeline/script
+ExecStart=/bin/bash guacchk.sh
+
