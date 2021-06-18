@@ -1,0 +1,8 @@
+SENDGRID:
+  EMAIL_APIKEY: sendgridapikey
+  EMAIL_FROM: validemail@example.com
+  EMAIL_TO: toemail@example.com
+SERVICES:
+  GUACAMOLE:
+    PORT: 4822
+    IP_ADDRESS: 10.0.0.4
