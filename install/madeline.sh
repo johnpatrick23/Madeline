@@ -11,7 +11,7 @@ mv -f $currentPath/Madeline /etc/Madeline
 sudo chown -R Madeline:Madeline /etc/Madeline
 sudo chmod -R u+rw /etc/Madeline
 
-cp $currentPath/Madeline/service/madeline.service /etc/systemd/system
+cp /etc/Madeline/service/madeline.service /etc/systemd/system
 
 sudo systemctl daemon-reload
 sudo systemctl start madeline.service
