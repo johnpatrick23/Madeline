@@ -6,3 +6,5 @@ User=root
 WorkingDirectory=/etc/Madeline/script
 ExecStart=/bin/bash guacchk.sh
 
+[Install]
+WantedBy=multi-user.target

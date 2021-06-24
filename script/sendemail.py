@@ -9,7 +9,7 @@ from sendgrid.helpers.mail import *
 
 def send_email(apikey, from_email, to_email, cc_email, subject, message):
     sg = sendgrid.SendGridAPIClient(apikey)
-    content = Content("text/plain", message)
+    content = Content("text/html", message)
 
     to_emails = []
     for to in to_email:
