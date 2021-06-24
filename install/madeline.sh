@@ -11,10 +11,10 @@ mv -f $currentPath/Madeline /etc/Madeline
 sudo chown -R Madeline:Madeline /etc/Madeline
 sudo chmod -R u+rw /etc/Madeline
 
-cp $currentPath/Madeline/service/guacchk.service /etc/systemd/system
+cp $currentPath/Madeline/service/madeline.service /etc/systemd/system
 
 sudo systemctl daemon-reload
-sudo systemctl start guacchk.service
-sudo systemctl status guacchk.service
+sudo systemctl start madeline.service
+sudo systemctl status madeline.service
 
-sudo systemctl enable guacchk.service
+sudo systemctl enable madeline.service
