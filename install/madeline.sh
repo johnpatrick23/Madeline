@@ -13,8 +13,4 @@ sudo chmod -R u+rw /etc/Madeline
 
 cp /etc/Madeline/service/madeline.service /etc/systemd/system
 
-sudo systemctl daemon-reload
-sudo systemctl start madeline.service
-sudo systemctl status madeline.service
 
-sudo systemctl enable madeline.service
