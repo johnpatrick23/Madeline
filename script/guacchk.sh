@@ -38,10 +38,10 @@ do
 	then
                 echo "[$(date)]: mysqld is NOT running" >> $log
                 sendemail=true
-		mysqld=0
+		mysql=0
         else
                 echo "[$(date)]: mysqld is running" >> $log
-		mysqld=1
+		mysql=1
 	fi
 
 	if [ -z "$(top -b -n 1 | egrep 'nginx')" ]
