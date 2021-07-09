@@ -128,9 +128,9 @@ do
 	if [[ "$sendemail" = true && "$manageable" = true ]]
 	then
 		sudo service guacd restart || true
-		#sudo service mysql restart || true
+		sudo service mysql restart || true
 		sudo service nginx restart || true
-		#sudo service tomcat8 restart || true
+		sudo service tomcat8 restart || true
 
 		if [[ $restartAttempt = 5 || $restartAttempt = 2 || $restartAttempt = 3 || $restartAttempt = 4 ]]
 		then
