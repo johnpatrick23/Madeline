@@ -17,13 +17,13 @@ restartAttempt=0
 guacd=1
 mysql=1
 nginx=1
-tomcat8=1
+tomcat=1
 
 function check_error(){
         local guacd="$1"
         local mysql="$2"
         local nginx="$3"
-        local tomcat8="$4"
+        local tomcat="$4"
         local submessage=""
 
         if [ "$guacd" = 0 ]
@@ -44,9 +44,9 @@ function check_error(){
         fi
 
 
-        if [ "$tomcat8" = 0 ]
+        if [ "$tomcat" = 0 ]
         then
-                submessage="${submessage}<br/>TOMCAT8----<br/>"$(sudo systemctl status tomcat8 || true)"<br/><br/><br/>"
+                submessage="${submessage}<br/>TOMCAT8----<br/>"$(sudo systemctl status tomcat* || true)"<br/><br/><br/>"
         fi
 
         echo ${submessage}
@@ -88,14 +88,14 @@ do
         	nginx=1
 	fi
 
-	if [ -z "$(top -b -n 1 | egrep 'tomcat8')" ]
+	if [ -z "$(top -b -n 1 | egrep 'tomcat')" ]
 	then
-                echo "[$(date)]: tomcat8 is NOT running" >> $log
+                echo "[$(date)]: tomcat is NOT running" >> $log
                 sendemail=true
-		tomcat8=0
+		tomcat=0
         else
-                echo "[$(date)]: tomcat8 is running" >> $log
-        	tomcat8=1
+                echo "[$(date)]: tomcat is running" >> $log
+        	tomcat=1
 	fi
 
 	echo "" >> $log
@@ -112,11 +112,11 @@ do
 
 	echo "" >> $log
         echo "[$(date)]: ------{ tomcat8 }-----------" >> $log
-	echo $(sudo service tomcat8 status) >> $log 2>&1
+	echo $(sudo service tomcat* status) >> $log 2>&1
 
 	echo "restartAttempt $restartAttempt"
 
-	if [[ "$guacd" = 1 && "$mysql" = 1 && "$nginx" = 1 && "$tomcat8" = 1 ]]
+	if [[ "$guacd" = 1 && "$mysql" = 1 && "$nginx" = 1 && "$tomcat" = 1 ]]
         then
 		restartAttempt=0
 		sendemail=false
@@ -130,16 +130,16 @@ do
 		sudo service guacd restart || true
 		sudo service mysql restart || true
 		sudo service nginx restart || true
-		sudo service tomcat8 restart || true
+		sudo service tomcat* restart || true
 
 		if [[ $restartAttempt = 5 || $restartAttempt = 2 || $restartAttempt = 3 || $restartAttempt = 4 ]]
 		then
 			manageable=false
 			if [ "$sendemail" = true ] && [ "$manageable" = false ]
 	                then
-				status=$(check_error $guacd $mysql $nginx $tomcat8)
+				status=$(check_error $guacd $mysql $nginx $tomcat)
 	                        message="Something went wrong in guac server: $(hostname)<br/><br/>After $restartAttempt attempt(s) Guac Service is still not running.<br/>Please check the server ASAP.<br/><br/>"
-	                        #status="<br/>GUAC----<br/>"$(sudo systemctl status guacd || true)"<br/><br/><br/>MYSQL----<br/>"$(sudo systemctl status mysql || true)"<br/><br/><br/>NGINX----<br/>"$(sudo systemctl status nginx || true)"<br/><br/><br/>TOMCAT8----<br/>"$(sudo systemctl status tomcat8 || true)"<br/><br/>"
+	                        #status="<br/>GUAC----<br/>"$(sudo systemctl status guacd || true)"<br/><br/><br/>MYSQL----<br/>"$(sudo systemctl status mysql || true)"<br/><br/><br/>NGINX----<br/>"$(sudo systemctl status nginx || true)"<br/><br/><br/>TOMCAT8----<br/>"$(sudo systemctl status tomcat* || true)"<br/><br/>"
 	                        sudo python sendemail.py -m "$message$status" -s "Guac Report"
 			fi
 		elif [ $restartAttempt -gt 5 ]
